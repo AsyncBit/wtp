@@ -1,0 +1,20 @@
+<head>
+  <script src="./js/comfy.min.js"></script>
+  <script src="./js/pokemon-info.js"></script>
+  <script src="./main.js"></script>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div id="pokemon-holder"></div>
+  <audio
+    id="who-that-pokemon-audio"
+    src="./assets/who-that-pokemon.mp3"
+    preload="auto"
+  ></audio>
+  <div id="ball" style="visibility: hidden">
+    <video id="ballVid" muted="" playsinline="" onended="stopVid()">
+      <source src="./assets/ball2_VP8.webm" type="video/webm" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</body>

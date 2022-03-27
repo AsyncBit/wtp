@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#pokemon-holder {
+  width: 610px;
+  height: 300px;
+  border: 2px solid red;
+}
+
+#ballVid {
+  width: 610px;
+  height: 300px;
+  position: absolute;
+  top: 0;
+  left: -150;
+}
+
+#pokemon-image {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+#title-text {
+  width: 300px;
+  float: right;
+  display: none;
+}
+
+.blurred {
+  filter: contrast(0) sepia(0) hue-rotate(0) saturate(2000%) brightness(0);
+}
