@@ -29,10 +29,7 @@ ComfyJS.onCommand = (user, command, message, flags, extra) => {
     (flags.broadcaster && command === "wtp") ||
     (flags.mod && command === "wtp")
   ) {
-    if (!isSolved) {
       startGame();
-    } else {
-      skip();
     }
   }
   if (

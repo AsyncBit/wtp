@@ -43,7 +43,7 @@ function getAmoutOfZeros(number) {
 }
 
 function startGame() {
-  if (isRunning) return;
+  if (isRunning) winReset();
 
   isSolved = false;
   isRunning = true;
