@@ -2,9 +2,7 @@ let mute = false;
 let auto = true;
 let per = "All";
 let language = "en";
-let channel = "";
 let botuser = "";
-let token = "";
 let pokemon;
 let pokeDex = "true";
 let heightTxt = "Height";
@@ -13,6 +11,7 @@ let foundByTxt = "Found By";
 let wasRightTxt = "You Was Right";
 
 let isSolved = false;
+let isRunning = false;
 let min = 1;
 let max = 151;
 
@@ -26,32 +25,6 @@ let tShow = true;
 // Mine
 let pokeNum = 0;
 let currentName = "";
-
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-
-if (urlParams.has("token")) {
-  token = urlParams.get("token");
-} else {
-  token = "";
-}
-
-if (urlParams.has("channel")) {
-  channel = urlParams.get("channel");
-} else {
-  channel = "";
-}
-
-if (botuser) {
-  ComfyJS.Init(botuser, token, channel);
-  console.log("Bot Send");
-} else if (token) {
-  ComfyJS.Init(channel, token);
-  console.log("Channel Send");
-} else {
-  ComfyJS.Init(channel);
-  console.log("No Send");
-}
 
 function getRandomNumber() {
   let randNumber = Math.floor(Math.random() * 151) + 1;
@@ -70,7 +43,10 @@ function getAmoutOfZeros(number) {
 }
 
 function startGame() {
+  if (isRunning) return;
+
   isSolved = false;
+  isRunning = true;
 
   if (rType === "original") {
     resource = "original";
@@ -101,7 +77,7 @@ function stopVid() {
 
 function showBlurredImage() {
   let blurredImage = document.createElement("img");
-  blurredImage.src = "./assets/" + pokeNum + ".gif";
+  blurredImage.src = "./assets/pokemons/" + pokeNum + ".gif";
   blurredImage.className = "blurred";
   blurredImage.id = "pokemon-image";
 
@@ -134,81 +110,9 @@ function guess(x, n) {
   }
 }
 
-ComfyJS.onCommand = (user, command, message, flags, extra) => {
-  if (
-    (flags.broadcaster && command === "wtp") ||
-    (flags.mod && command === "wtp")
-  ) {
-    if (!isSolved) {
-      startGame();
-    } else {
-      skip();
-    }
-  }
-  if (
-    (flags.broadcaster && command === "resetwtp") ||
-    (flags.mod && command === "resetwtp")
-  ) {
-    winReset();
-  }
-  if (
-    (flags.broadcaster && command === "skipwtp") ||
-    (flags.mod && command === "skipwtp")
-  ) {
-    skip();
-  }
-  if (
-    (flags.broadcaster && command === "giveup") ||
-    (flags.mod && command === "giveup")
-  ) {
-    giveUp();
-  }
-  if (
-    (flags.broadcaster && command === "stopwtp") ||
-    (flags.mod && command === "stopwtp")
-  ) {
-    stopGame();
-  }
-  if (
-    (flags.broadcaster && command === "stopwtpauto") ||
-    (flags.mod && command === "stopwtpauto")
-  ) {
-    stopAuto();
-  }
-  if (
-    (flags.broadcaster && command === "startwtpauto") ||
-    (flags.mod && command === "startwtpauto")
-  ) {
-    startAuto();
-  }
-};
-
-ComfyJS.onChat = (user, message, flags, self, extra) => {
-  if (!isSolved) {
-    message = message.replace("?", "");
-    message = message.replace("@", "");
-    message = message.split(" ");
-
-    if (per === "All") {
-      guess(message[0].toLowerCase(), user);
-    } else if (per === "Subs") {
-      if (flags.subscriber || flags.mod || flags.broadcaster) {
-        guess(message[0].toLowerCase(), user);
-      }
-    } else if (per === "Vips" || flags.mod || flags.broadcaster) {
-      if (flags.vip) {
-        guess(message[0].toLowerCase(), user);
-      }
-    } else if (per === "Vip/Subs") {
-      if (flags.vip || flags.subscriber || flags.mod || flags.broadcaster) {
-        guess(message[0].toLowerCase(), user);
-      }
-    }
-  }
-};
-
 function winReset() {
   isSolved = false;
+  isRunning = false;
   document.getElementById("pokemon-image").remove();
 }
 
