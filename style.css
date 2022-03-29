@@ -29,5 +29,5 @@
 }
 
 .blurred {
-  filter: contrast(0) sepia(0) hue-rotate(0) saturate(2000%) brightness(0);
+  filter: contrast(0) sepia(0) hue-rotate(0) saturate(2000%) brightness(50);
 }
